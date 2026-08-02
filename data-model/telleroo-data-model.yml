@@ -1,0 +1,63 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.telleroo.com/ ; https://partner-docs.telleroo.com/
+note: >-
+  Entity graph derived from Telleroo's published object reference (no OpenAPI is
+  published). Amounts are in minor units; ids are opaque strings.
+entities:
+- name: account
+  api: Business + Partner
+  description: A company bank/e-money account with a unique id and available balance.
+  key_fields: [id, available_balance, currency_code]
+- name: recipient
+  api: Business
+  description: A saved payee with validated bank details.
+  key_fields: [id, name, legal_type, currency_code, account_no, sort_code, iban, bic, dob]
+  enums:
+    legal_type: [PRIVATE, BUSINESS]
+    currency_code: [GBP, EUR, USD]
+- name: transaction
+  api: Business
+  description: A record of money movement, filterable by status and date.
+  key_fields: [id, account_id, amount, currency_code, status, processed_at, reference]
+  enums:
+    status: [payment_sent, preparing_payment, on_hold, waiting_for_approval, waiting_for_funds, looking_into_it, credited, failed, cancelled]
+- name: bank_transfer
+  api: Business
+  description: An outbound payment to a recipient (saved or adhoc).
+  key_fields: [id, account_id, recipient_id, amount, currency_code, reference, tag, reconciliation, idempotent_key]
+- name: company
+  api: Partner
+  description: A client company a partner is authorized to act on behalf of.
+  key_fields: [id]
+- name: pay_run
+  api: Partner
+  description: A batch of payments created and submitted for approval.
+  key_fields: [id, status, initialized, accepted, rejected, idempotent_key]
+  enums:
+    status: [validating, validated, processing, awaiting_review, awaiting_approval, approving, paid, cancelled]
+relationships:
+- from: transaction
+  to: account
+  type: belongs_to
+  via: account_id
+- from: bank_transfer
+  to: account
+  type: belongs_to
+  via: account_id
+- from: bank_transfer
+  to: recipient
+  type: belongs_to
+  via: recipient_id
+- from: account
+  to: company
+  type: belongs_to
+  via: company (Partner API)
+- from: pay_run
+  to: company
+  type: belongs_to
+  via: company (Partner API)
+- from: pay_run
+  to: bank_transfer
+  type: has_many
+  via: payments in the batch

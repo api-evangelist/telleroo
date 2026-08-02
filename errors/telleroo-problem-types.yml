@@ -1,0 +1,44 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.telleroo.com/ ; https://partner-docs.telleroo.com/
+format: json
+envelope: >-
+  Errors are returned as JSON. Validation failures contain field-specific
+  messages; authentication failures include an "error" key set to
+  "invalid credentials". Telleroo does not publish RFC 9457 problem+json.
+problems:
+- status: 200
+  title: OK
+  meaning: Request succeeded.
+- status: 204
+  title: No Content
+  meaning: Deletion succeeded; no response body.
+- status: 404
+  title: Not Found
+  meaning: The requested resource (recipient, transaction, transfer, pay run) does not exist.
+- status: 409
+  title: Conflict
+  meaning: >-
+    A duplicate idempotent_key was supplied; the original response is returned
+    instead of creating a duplicate payment.
+- status: 422
+  title: Unprocessable Entity
+  meaning: >-
+    Invalid or missing parameters (e.g. failed sort-code/IBAN validation,
+    invalid recipient name for the given legal_type). Body carries
+    field-specific validation messages.
+- status: 429
+  title: Too Many Requests
+  meaning: Rate limit exceeded; reduce request rate and retry.
+- status: 500
+  title: Internal Server Error
+  meaning: Unexpected server-side error.
+- status: 503
+  title: Service Unavailable
+  meaning: Service temporarily unavailable.
+- status: 504
+  title: Gateway Timeout
+  meaning: Upstream timeout.
+auth_errors:
+- error: invalid credentials
+  meaning: The supplied auth token is invalid or has expired.

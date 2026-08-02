@@ -1,0 +1,75 @@
+generated: '2026-07-21'
+method: derived
+status: candidate
+source: >-
+  Derived from Telleroo's published operation reference (docs.telleroo.com,
+  partner-docs.telleroo.com). No official hosted MCP server is published;
+  this is a candidate tool surface for one.
+server:
+  name: telleroo
+  transport: http
+tools:
+- name: list_accounts
+  description: List company bank/e-money accounts with balances.
+  api: Telleroo Business API
+  source_operation: GET /accounts
+- name: list_recipients
+  description: List saved recipients (paginated).
+  api: Telleroo Business API
+  source_operation: GET /recipients
+- name: get_recipient
+  description: Fetch a single recipient by id.
+  api: Telleroo Business API
+  source_operation: GET /recipients/{id}
+- name: create_recipient
+  description: Create a validated recipient (payee).
+  api: Telleroo Business API
+  source_operation: POST /recipients
+- name: delete_recipient
+  description: Remove a recipient.
+  api: Telleroo Business API
+  source_operation: DELETE /recipients/{id}
+- name: list_transactions
+  description: Query transaction history by account, date range and status.
+  api: Telleroo Business API
+  source_operation: GET /transactions
+- name: get_transaction
+  description: Fetch a single transaction by id.
+  api: Telleroo Business API
+  source_operation: GET /transactions/{id}
+- name: create_bank_transfer
+  description: Send a payment to a saved recipient (idempotent).
+  api: Telleroo Business API
+  source_operation: POST /bank_transfers
+- name: create_adhoc_bank_transfer
+  description: Send a one-off payment with inline recipient details (idempotent).
+  api: Telleroo Business API
+  source_operation: POST /adhoc_bank_transfers
+- name: cancel_bank_transfer
+  description: Cancel a pending bank transfer.
+  api: Telleroo Business API
+  source_operation: DELETE /bank_transfers/{id}
+- name: list_companies
+  description: List client companies the partner can act on behalf of.
+  api: Telleroo Partner API
+  source_operation: GET /companies
+- name: get_company
+  description: Fetch a single company by id.
+  api: Telleroo Partner API
+  source_operation: GET /companies/{id}
+- name: create_pay_run
+  description: Create a pay run batch of payments (idempotent).
+  api: Telleroo Partner API
+  source_operation: POST /payruns
+- name: submit_pay_run
+  description: Submit a pay run for review/approval.
+  api: Telleroo Partner API
+  source_operation: PATCH /payruns/{id}
+- name: get_pay_run
+  description: Retrieve pay run details and status.
+  api: Telleroo Partner API
+  source_operation: GET /payruns/{id}
+- name: delete_pay_run
+  description: Delete a pay run.
+  api: Telleroo Partner API
+  source_operation: DELETE /payruns/{id}

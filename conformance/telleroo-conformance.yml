@@ -1,0 +1,41 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.telleroo.com/ ; https://partner-docs.telleroo.com/
+standards:
+- id: oauth2
+  conforms: true
+  evidence: >-
+    Partner API uses OAuth 2.0 authorization code grant with authorize/token
+    endpoints, refresh tokens and a create scope.
+- id: oauth2-authorization-code
+  conforms: true
+  evidence: response_type=code exchanged for Bearer access_token at /oauth/token
+- id: rest
+  conforms: true
+  evidence: resource-oriented HTTP endpoints with standard verbs (GET/POST/PATCH/DELETE)
+- id: idempotency
+  conforms: true
+  evidence: idempotent_key on payment creation returns 409 on replay
+- id: pagination
+  conforms: true
+  evidence: page-number pagination (page param, 40 per page) on list endpoints
+- id: webhooks
+  conforms: true
+  evidence: outbound webhooks for credit/payment/pay-run events with Authenticity-Token verification
+- id: confirmation-of-payee
+  conforms: true
+  evidence: >-
+    Confirmation of Payee (CoP) name-matching checks are supported, surfaced via
+    the COP Check Completed webhook (full_match/partial_match/no_match).
+- id: faster-payments
+  conforms: true
+  evidence: GBP payments sent over the UK Faster Payments Scheme 24/7
+- id: sepa
+  conforms: true
+  evidence: EUR payments over SEPA (iban/bic recipient details)
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: errors are field-specific JSON, not application/problem+json
+- id: openapi
+  conforms: false
+  evidence: no machine-readable OpenAPI/Swagger description is published

@@ -1,0 +1,34 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.telleroo.com/ ; https://partner-docs.telleroo.com/
+test_vs_live:
+  separation: separate-base-url
+  production_base: https://api.telleroo.com
+  sandbox_base: https://sandbox.telleroo.com
+  partner_oauth_sandbox_host: https://sandbox.app.telleroo.com
+  notes: >-
+    Telleroo separates test and live by environment host rather than by key
+    prefix. Sandbox credentials/tokens are issued for the sandbox environment
+    and are distinct from production tokens.
+simulation_endpoints:
+- method: POST
+  path: /transaction_send
+  environment: sandbox
+  effect: >-
+    Advances a test transaction from status preparing_payment to payment_sent,
+    simulating a successful dispatch.
+- method: POST
+  path: /transaction_fail
+  environment: sandbox
+  effect: >-
+    Advances a test transaction from status payment_sent to failed, simulating
+    a bounced/failed payment.
+test_values:
+  note: >-
+    Telleroo does not publish fixed magic test card numbers or test bank
+    accounts in its public docs; sandbox behaviour is driven by the simulation
+    endpoints above plus recipient/transfer objects created in the sandbox
+    environment. No verbatim test credentials were published to capture.
+cross_references:
+  conventions: conventions/telleroo-conventions.yml
+  authentication: authentication/telleroo-authentication.yml

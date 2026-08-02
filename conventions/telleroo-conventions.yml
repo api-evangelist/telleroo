@@ -1,0 +1,58 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.telleroo.com/ ; https://partner-docs.telleroo.com/
+authentication:
+  style: >-
+    Business API: static token in the Authorization header. Partner API:
+    OAuth 2.0 Bearer access token. See authentication/telleroo-authentication.yml.
+  transport: HTTPS required; plain HTTP requests fail.
+idempotency:
+  supported: true
+  mechanism: request-field-and-header
+  key: idempotent_key
+  scope: per bank transfer / per pay run
+  behavior: >-
+    Reusing a previously seen idempotent_key returns the original response with
+    HTTP 409 CONFLICT instead of creating a duplicate payment. Applies to
+    POST /bank_transfers and POST /adhoc_bank_transfers on the Business API and
+    to POST /payruns on the Partner API.
+  source: https://docs.telleroo.com/#idempotency
+pagination:
+  style: page-number
+  param: page
+  starts_at: 1
+  page_size: 40
+  ordering: descending by processed_at
+  applies_to: [GET /recipients, GET /transactions]
+versioning:
+  scheme: vendor-media-type
+  header: Accept
+  format: application/vnd.telleroo.v{N}
+  business_api_version: v1
+  partner_api_version: v3
+  default: latest version when the Accept header is omitted
+  policy: >-
+    Non-backwards-compatible changes are announced in advance before release.
+  source: https://docs.telleroo.com/#versioning
+request_format:
+  content_type: application/x-www-form-urlencoded
+  amounts: integer minor units (pence/cents); 100 = 1.00 GBP/EUR
+  currencies: [GBP, EUR, USD]
+error_envelope:
+  format: json
+  shape: >-
+    Field-specific JSON validation messages; authentication failures return an
+    "error" key with the value "invalid credentials". See
+    errors/telleroo-problem-types.yml.
+rate_limiting:
+  signal: HTTP 429 status when the threshold is exceeded
+  guidance: reduce request rate on 429
+webhooks:
+  supported: true
+  auth_header: Authenticity-Token
+  detail: asyncapi/telleroo-webhooks-asyncapi.yml
+cross_references:
+  errors: errors/telleroo-problem-types.yml
+  lifecycle: lifecycle/telleroo-lifecycle.yml
+  authentication: authentication/telleroo-authentication.yml
+  sandbox: sandbox/telleroo-sandbox.yml

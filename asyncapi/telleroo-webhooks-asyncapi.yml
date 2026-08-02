@@ -1,0 +1,182 @@
+generated: '2026-07-21'
+method: generated
+source: https://docs.telleroo.com/#webhooks ; https://partner-docs.telleroo.com/#webhooks
+spec_type: AsyncAPI
+note: >-
+  Telleroo documents outbound webhooks but publishes no AsyncAPI. This AsyncAPI
+  3.0.0 document was generated from Telleroo's published webhook catalog to
+  describe the event surface; message payload fields reflect the documented COP
+  Check payload and event descriptions. It is a faithful description of the
+  documented webhooks, not a provider-published spec.
+asyncapi: 3.0.0
+info:
+  title: Telleroo Webhooks
+  version: 1.0.0
+  description: >-
+    Outbound webhook events emitted by the Telleroo Business API (v1) and
+    Partner API (v3). Each delivery is an HTTP POST to the subscriber URL
+    configured in the Telleroo dashboard and carries a subscriber-configured
+    Authenticity-Token header for verification.
+defaultContentType: application/json
+servers:
+  production:
+    host: api.telleroo.com
+    protocol: https
+    description: Webhooks are POSTed from Telleroo to the subscriber's configured HTTPS endpoint.
+channels:
+  creditNotification:
+    address: /credit
+    messages:
+      creditNotification:
+        $ref: '#/components/messages/creditNotification'
+  failedPayment:
+    messages:
+      failedPayment:
+        $ref: '#/components/messages/failedPayment'
+  sentPayment:
+    messages:
+      sentPayment:
+        $ref: '#/components/messages/sentPayment'
+  companyApproved:
+    messages:
+      companyApproved:
+        $ref: '#/components/messages/companyApproved'
+  copCheckCompleted:
+    messages:
+      copCheckCompleted:
+        $ref: '#/components/messages/copCheckCompleted'
+  payRunAwaitingApproval:
+    messages:
+      payRunAwaitingApproval:
+        $ref: '#/components/messages/payRunAwaitingApproval'
+  payRunApproved:
+    messages:
+      payRunApproved:
+        $ref: '#/components/messages/payRunApproved'
+  payRunPaymentsSent:
+    messages:
+      payRunPaymentsSent:
+        $ref: '#/components/messages/payRunPaymentsSent'
+  paymentCancelled:
+    messages:
+      paymentCancelled:
+        $ref: '#/components/messages/paymentCancelled'
+operations:
+  receiveCreditNotification:
+    action: receive
+    channel:
+      $ref: '#/channels/creditNotification'
+  receiveFailedPayment:
+    action: receive
+    channel:
+      $ref: '#/channels/failedPayment'
+  receiveSentPayment:
+    action: receive
+    channel:
+      $ref: '#/channels/sentPayment'
+  receiveCompanyApproved:
+    action: receive
+    channel:
+      $ref: '#/channels/companyApproved'
+  receiveCopCheckCompleted:
+    action: receive
+    channel:
+      $ref: '#/channels/copCheckCompleted'
+  receivePayRunAwaitingApproval:
+    action: receive
+    channel:
+      $ref: '#/channels/payRunAwaitingApproval'
+  receivePayRunApproved:
+    action: receive
+    channel:
+      $ref: '#/channels/payRunApproved'
+  receivePayRunPaymentsSent:
+    action: receive
+    channel:
+      $ref: '#/channels/payRunPaymentsSent'
+  receivePaymentCancelled:
+    action: receive
+    channel:
+      $ref: '#/channels/paymentCancelled'
+components:
+  messages:
+    creditNotification:
+      name: creditNotification
+      title: Credit Notification (funds received)
+      description: Business API event fired when funds are received into an account. Partner equivalent - credit_received.
+      payload:
+        type: object
+    failedPayment:
+      name: failedPayment
+      title: Failed Payment (transfer bounced)
+      description: Business API event fired when a transfer fails/bounces. Partner equivalent - payment_failed.
+      payload:
+        type: object
+    sentPayment:
+      name: sentPayment
+      title: Sent Payment (payment dispatched)
+      description: Business API event fired when a payment is dispatched. Partner equivalent - payment_sent.
+      payload:
+        type: object
+    companyApproved:
+      name: companyApproved
+      title: Company Approved (compliance approval)
+      description: Business API event fired when the company passes compliance approval and the endpoint is unlocked.
+      payload:
+        type: object
+    copCheckCompleted:
+      name: copCheckCompleted
+      title: COP Check Completed (Confirmation of Payee)
+      description: Fired when a Confirmation of Payee check completes for a recipient.
+      payload:
+        type: object
+        properties:
+          recipient_id:
+            type: string
+          recipient_cop_id:
+            type: string
+          cop:
+            type: string
+            enum: [full_match, partial_match, no_match]
+          cop_reason_code:
+            type: string
+          cop_validated_name:
+            type: string
+          cop_recipient_type_correct:
+            type: boolean
+            description: Omitted when cop is no_match.
+          last_checked_at:
+            type: string
+            format: date-time
+          idempotent_key:
+            type: string
+    payRunAwaitingApproval:
+      name: payRunAwaitingApproval
+      title: Pay Run Awaiting Approval
+      description: Partner API event (pay_run_awaiting_approval) - a pay run is awaiting user authorization.
+      payload:
+        type: object
+    payRunApproved:
+      name: payRunApproved
+      title: Pay Run Approved
+      description: Partner API event (pay_run_approved) - a pay run was approved by an authorized user.
+      payload:
+        type: object
+    payRunPaymentsSent:
+      name: payRunPaymentsSent
+      title: Pay Run Payments Sent
+      description: Partner API event (pay_run_payments_sent) - all payments in the pay run have been sent.
+      payload:
+        type: object
+    paymentCancelled:
+      name: paymentCancelled
+      title: Payment Cancelled
+      description: Partner API event (payment_cancelled) - a payment was cancelled by the user.
+      payload:
+        type: object
+  securitySchemes:
+    authenticityToken:
+      type: httpApiKey
+      name: Authenticity-Token
+      in: header
+      description: Subscriber-configured token echoed on every webhook POST for verification.

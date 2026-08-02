@@ -1,0 +1,23 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.telleroo.com/ ; https://status.telleroo.com/
+versioning:
+  scheme: vendor-media-type
+  header: Accept
+  format: application/vnd.telleroo.v{N}
+  business_current: v1
+  partner_current: v3
+  default: latest version when Accept header omitted
+  docs: https://docs.telleroo.com/#versioning
+deprecation:
+  policy: >-
+    Telleroo commits to giving advance notice before introducing any
+    non-backwards-compatible (breaking) API change, and pins existing behaviour
+    behind the vendored Accept version header so integrations keep working.
+  advance_notice: true
+  sunset_header: false
+  docs: https://docs.telleroo.com/#versioning
+status_page: https://status.telleroo.com/
+sla:
+  faster_payments: 24/7 processing including bank holidays (typically minutes)
+deprecated_operations: []

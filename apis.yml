@@ -1,27 +1,164 @@
 aid: telleroo
 name: Telleroo
-description: Telleroo is a company surfaced as a portfolio company of seedcamp, speedinvest and added
-  to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment
-  pipeline.
+description: >-
+  Telleroo is a UK bulk payments platform that automates supplier and payroll
+  payments for businesses, accountants and bookkeepers. It provisions a
+  ring-fenced e-money wallet in the customer's name and sends bulk Faster
+  Payments 24/7 (including bank holidays), plus international payments in 25+
+  currencies over SEPA, ACH and SWIFT. Built-in fraud controls include
+  Confirmation of Payee, new/updated payee alerts and multi-level approval
+  workflows, and it integrates with accounting and payroll software such as
+  Xero, QuickBooks, Employment Hero and Staffology. Telleroo exposes two
+  RESTful APIs: a Business API (v1, token auth) for automating outbound
+  payments from your own account, and a Partner/Embedded Payments API (v3,
+  OAuth 2.0) for building pay runs into your own platform on behalf of client
+  companies. Both support idempotent requests, real-time webhooks and a
+  dedicated sandbox environment.
 url: https://raw.githubusercontent.com/api-evangelist/telleroo/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - seedcamp
 - speedinvest
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: profiled
+x-tier-reason: enriched-from-provider-docs
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
+image: https://www.telleroo.com/favicon.ico
 tags:
 - Company
-apis: []
+- Payments
+- Bulk Payments
+- Payroll
+- Faster Payments
+- E-Money
+- Fintech
+- Banking
+- International Payments
+- Embedded Finance
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- name: Telleroo Business API
+  description: >-
+    RESTful API (v1) to automate outbound payments from your own Telleroo
+    account: manage recipients, query accounts and transactions, and create
+    bank transfers (to a saved recipient or adhoc). Token authentication via
+    the Authorization header; version selected with the
+    Accept: application/vnd.telleroo.v1 header. Supports idempotent transfers
+    (idempotent_key), pagination and webhooks.
+  humanURL: https://docs.telleroo.com/
+  baseURL: https://api.telleroo.com
+  tags:
+  - Payments
+  - Bank Transfers
+  - Recipients
+  properties:
+  - type: Documentation
+    url: https://docs.telleroo.com/
+  - type: APIReference
+    url: https://docs.telleroo.com/#introduction
+  - type: Authentication
+    url: authentication/telleroo-authentication.yml
+- name: Telleroo Partner API
+  description: >-
+    RESTful Embedded Payments API (v3) to build Telleroo into your own
+    platform: authorize against client companies over OAuth 2.0
+    (authorization code, scope "create"), enumerate companies and accounts,
+    and create/submit/manage pay runs on their behalf. Version selected with
+    the Accept: application/vnd.telleroo.v3 header. Supports idempotent pay
+    runs and webhooks.
+  humanURL: https://partner-docs.telleroo.com/
+  baseURL: https://api.telleroo.com
+  tags:
+  - Payments
+  - Pay Runs
+  - Embedded Finance
+  - OAuth
+  properties:
+  - type: Documentation
+    url: https://partner-docs.telleroo.com/
+  - type: APIReference
+    url: https://partner-docs.telleroo.com/#introduction
+  - type: OAuthScopes
+    url: scopes/telleroo-scopes.yml
 common:
 - type: Website
-  url: http://telleroo.com
+  url: https://www.telleroo.com
+- type: DeveloperPortal
+  url: https://www.telleroo.com/api
+- type: Documentation
+  url: https://docs.telleroo.com/
+- type: APIReference
+  url: https://docs.telleroo.com/#introduction
+- type: GettingStarted
+  url: https://www.telleroo.com/api
+- type: Support
+  url: http://help.telleroo.com/en/
+- type: HelpCenter
+  url: http://help.telleroo.com/en/
+- type: Blog
+  url: https://www.telleroo.com/blog-feed
+- type: StatusPage
+  url: https://status.telleroo.com/
+- type: Pricing
+  url: https://www.telleroo.com/pricing
+- type: SignUp
+  url: https://www.telleroo.com/sign-up
+- type: Login
+  url: https://app.telleroo.com/login
+- type: TermsOfService
+  url: https://www.telleroo.com/terms-conditions
+- type: PrivacyPolicy
+  url: https://www.telleroo.com/privacy-policy
+- type: LLMsTxt
+  url: llms/telleroo-llms.txt
+- type: Authentication
+  url: authentication/telleroo-authentication.yml
+- type: OAuthScopes
+  url: scopes/telleroo-scopes.yml
+- type: Conventions
+  url: conventions/telleroo-conventions.yml
+- type: Idempotency
+  url: conventions/telleroo-conventions.yml
+- type: ErrorCatalog
+  url: errors/telleroo-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/telleroo-lifecycle.yml
+- type: Deprecation
+  url: lifecycle/telleroo-lifecycle.yml
+- type: Sandbox
+  url: sandbox/telleroo-sandbox.yml
+- type: Conformance
+  url: conformance/telleroo-conformance.yml
+- type: DataModel
+  url: data-model/telleroo-data-model.yml
+- type: DomainSecurity
+  url: security/telleroo-domain-security.yml
+- type: AsyncAPI
+  url: asyncapi/telleroo-webhooks-asyncapi.yml
+- type: Webhooks
+  url: asyncapi/telleroo-webhooks-asyncapi.yml
+- type: MCPServer
+  url: mcp/telleroo-mcp.yml
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 13
+  pass: local-v1

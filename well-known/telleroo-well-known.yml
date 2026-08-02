@@ -1,0 +1,26 @@
+generated: '2026-07-21'
+method: searched
+source: live probes of Telleroo hosts
+note: >-
+  No /.well-known/ discovery documents were served on any probed host; all
+  returned 404. Recorded as a negative result (no WellKnown/SecurityTxt pointer
+  is wired in apis.yml because nothing was found).
+hosts:
+- host: https://api.telleroo.com
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+- host: https://telleroo.com
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+- host: https://sandbox.telleroo.com
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}

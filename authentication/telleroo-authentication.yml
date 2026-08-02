@@ -1,0 +1,48 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.telleroo.com/ ; https://partner-docs.telleroo.com/
+summary:
+  types: [http, oauth2]
+  api_key_in: [header]
+  oauth2_flows: [authorizationCode]
+  notes: >-
+    The Business API (v1) uses a static API token (generated in the Telleroo
+    dashboard) sent in the Authorization request header; all traffic must be
+    over HTTPS. The Partner API (v3) uses OAuth 2.0 authorization code flow to
+    act on behalf of client companies. Two Business token classes exist: a
+    Full Access token (all endpoints, optional auto-approval) and a Recipient
+    Access token (recipient management only, with censored bank details).
+schemes:
+- name: BusinessAuthorizationToken
+  api: Telleroo Business API
+  type: http
+  scheme: bearer
+  in: header
+  parameter: Authorization
+  description: >-
+    API token generated from the Telleroo dashboard, sent verbatim in the
+    Authorization header (Bearer token). Grants full access to all v1
+    endpoints; a limited Recipient Access token variant is also available.
+  source: https://docs.telleroo.com/#authentication
+- name: PartnerOAuth2
+  api: Telleroo Partner API
+  type: oauth2
+  flow: authorizationCode
+  authorizationUrl: https://admin.telleroo.com/oauth
+  tokenUrl: https://api.telleroo.com/oauth/token
+  refreshUrl: https://api.telleroo.com/oauth/token
+  scopes:
+    create: Permission to create pay runs on behalf of a client company
+  token:
+    token_type: Bearer
+    expires_in: 7200
+    refresh_token: supported
+  sandbox:
+    authorizationUrl: https://sandbox.app.telleroo.com/oauth
+    tokenUrl: https://sandbox.telleroo.com/oauth/token
+  description: >-
+    OAuth 2.0 authorization code grant. The partner redirects the client to
+    the Telleroo authorize URL with client_id, redirect_uri, response_type=code
+    and scope=create, then exchanges the returned code for an access token
+    (Bearer, 7200s TTL) and refresh token at the token endpoint.
+  source: https://partner-docs.telleroo.com/#authentication

@@ -1,0 +1,25 @@
+generated: '2026-07-21'
+method: searched
+source: https://partner-docs.telleroo.com/#authentication
+docs: https://partner-docs.telleroo.com/
+schemes:
+- name: PartnerOAuth2
+  api: Telleroo Partner API
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://admin.telleroo.com/oauth
+    tokenUrl: https://api.telleroo.com/oauth/token
+scopes:
+- scope: create
+  description: >-
+    Permission to create pay runs on behalf of an authorizing client company.
+    This is the only scope Telleroo's Partner (Embedded Payments) API
+    currently documents; it is requested in the authorize URL as scope=create
+    and echoed back in the token response.
+  flows: [authorizationCode]
+  sources: [https://partner-docs.telleroo.com/]
+notes: >-
+  The Business API (v1) does not use OAuth scopes; it authenticates with a
+  static Authorization token whose capability is set by token class
+  (Full Access vs Recipient Access), captured in
+  authentication/telleroo-authentication.yml.
