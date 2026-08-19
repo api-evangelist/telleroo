@@ -1,10 +1,8 @@
 generated: '2026-07-21'
 method: derived
 status: candidate
-source: >-
-  Derived from Telleroo's published operation reference (docs.telleroo.com,
-  partner-docs.telleroo.com). No official hosted MCP server is published;
-  this is a candidate tool surface for one.
+source: Derived from Telleroo's published operation reference (docs.telleroo.com, partner-docs.telleroo.com).
+  No official hosted MCP server is published; this is a candidate tool surface for one.
 server:
   name: telleroo
   transport: http
@@ -73,3 +71,9 @@ tools:
   description: Delete a pay run.
   api: Telleroo Partner API
   source_operation: DELETE /payruns/{id}
+deployment:
+  mode: none
+  verified: derived
+  tools: 16
+  checked: '2026-08-12'
+  source: catalog MCP census
