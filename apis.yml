@@ -90,6 +90,11 @@ apis:
   - Payments
   - Pay Runs
   - Embedded Finance
+  - Authentication
+  tags_raw:
+  - Payments
+  - Pay Runs
+  - Embedded Finance
   - OAuth
   properties:
   - type: Documentation
